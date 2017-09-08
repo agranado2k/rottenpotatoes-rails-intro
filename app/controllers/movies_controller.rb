@@ -12,7 +12,11 @@ class MoviesController < ApplicationController
 
   def index
     @filter = params[:filter]
-    @movies = Movie.all
+    if @filter
+      @movies = Movie.order(@filter.to_sym)
+    else
+      @movies = Movie.all
+    end
   end
 
   def new
