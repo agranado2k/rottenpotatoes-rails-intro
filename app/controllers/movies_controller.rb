@@ -11,6 +11,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @filter = params[:filter]
     @movies = Movie.all
   end
 
