@@ -14,12 +14,10 @@ class MoviesController < ApplicationController
     @ratings = params[:ratings] || session[:ratings]
     @filter = params[:filter] || session[:filter]
     
-    if (params[:filter].nil? && !params[:redirect]) || (params[:ratings].nil? && !params[:redirect])
+    if (params[:filter].nil? && params[:redirect].nil?) || (params[:ratings].nil? && params[:redirect].nil?)
       flash.keep
-      session[:redirect] = true
-      redirect_to movies_path(filter: @filter, ratings: @ratings)
+      redirect_to movies_path(filter: @filter, ratings: @ratings, redirect: true)
     end
-    session.delete(:redirect)
     
     @all_ratings = Movie.ratings
     
