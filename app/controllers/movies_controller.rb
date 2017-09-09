@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
     @ratings = params[:ratings] || session[:ratings]
     @filter = params[:filter] || session[:filter]
     
-    if params[:filter].nil? || params[:ratings].nil?
+    if (params[:filter].nil? && !params[:ratings].nil?) || (params[:ratings].nil? && !params[:filter].nil?)
       flash.keep
       redirect_to movies_path(filter: @filter, ratings: @ratings)
     end
