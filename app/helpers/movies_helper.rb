@@ -11,4 +11,8 @@ module MoviesHelper
   def release_date_filter?(filter)
     filter == "release_date"
   end
+  
+  def rating_checked?(rating, ratings)
+    ratings.nil? || ratings.include?(rating)
+  end
 end

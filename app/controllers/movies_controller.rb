@@ -11,11 +11,11 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @ratings = params[:ratings] 
     @all_ratings = Movie.ratings
     @filter = params[:filter]
     
-    @movies = params[:ratings].nil? ? Movie.all : Movie.where()
-    
+    @movies = @ratings.nil? ? Movie.all : Movie.where(rating: @ratings.keys)
     @movies = @filter.nil? ? @movies : @movies.order(@filter.to_sym)
   end
 
