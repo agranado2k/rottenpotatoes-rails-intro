@@ -11,9 +11,18 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @ratings = params[:ratings] 
+    @ratings = params[:ratings] || session[:ratings]
+    @filter = params[:filter] || session[:filter]
+    
+    if params[:filter].nil? || params[:ratings].nil?
+      flash.keep
+      redirect_to movies_path(filter: @filter, ratings: @ratings)
+    end
+    
     @all_ratings = Movie.ratings
-    @filter = params[:filter]
+    
+    session[:ratings] = @ratings
+    session[:filter] = @filter
     
     @movies = @ratings.nil? ? Movie.all : Movie.where(rating: @ratings.keys)
     @movies = @filter.nil? ? @movies : @movies.order(@filter.to_sym)
